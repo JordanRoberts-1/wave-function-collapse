@@ -61,7 +61,7 @@ const Home = () => {
       </div>
 
       <div className=" absolute bottom-2 flex flex-col items-center animate-bounce">
-        <div className="font-sans text-xl text-center text-coloredtext">
+        <div className="font-sans text-xl text-center text-coloredtext cursor-default">
           Get Started
         </div>
         {/* <Link to="Projects" smooth={true} duration={750}> */}
