@@ -4,21 +4,16 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          "Source Sans Pro",
-          "Inconsolata",
-          "Helvetica",
-          "Arial",
-          "sans-serif",
-        ],
+        sans: ["Karla", "Inconsolata", "Helvetica", "Arial", "sans-serif"],
         mono: ["Anonymous Pro"],
         retro: ["Share Tech Mono"],
       },
       colors: {
-        background: "#1D343E",
-        dark: "#10181A",
-        light: "#FFD29C",
-        selection: "#F0F0F0",
+        darkest: "#001f41",
+        dark: "#001328",
+        light: "#002956",
+        coloredtext: "#03d2ef",
+        selection: "#8eebf8",
       },
     },
     screens: {
