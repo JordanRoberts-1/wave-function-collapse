@@ -5,7 +5,7 @@ import HomeCard from "./HomeCard";
 
 const Home = () => {
   return (
-    <div className="w-screen h-screen grid place-items-center bg-[url('../public/images/HomepageBackground.jpg')] bg-no-repeat bg-cover bg-center">
+    <div className="w-screen h-screen grid place-items-center bg-[url('images/HomepageBackground.jpg')] bg-no-repeat bg-cover bg-center">
       <div className="max-w-[50%] animate-fade-in-up opacity-0">
         <h1 className="text-6xl mb-12 text-center font-retro font-bold text-coloredtext">
           Wave Function Collapse Simulator!
