@@ -5,12 +5,12 @@ import HomeCard from "./HomeCard";
 
 const Home = () => {
   return (
-    <div className="w-screen h-screen grid place-items-center bg-[url('../public/images/HomepageBackground.jpg')] bg-no-repeat bg-cover bg-center bg-fixed">
+    <div className="w-screen h-screen grid place-items-center bg-[url('../public/images/HomepageBackground.jpg')] bg-no-repeat bg-cover bg-center">
       <div className="max-w-[50%] animate-fade-in-up opacity-0">
-        <h1 className="text-6xl mb-4 text-center font-retro font-bold text-coloredtext">
+        <h1 className="text-6xl mb-12 text-center font-retro font-bold text-coloredtext">
           Wave Function Collapse Simulator!
         </h1>
-        <p className="text-2xl text-center mb-32">
+        <p className="text-2xl text-center mb-24">
           The wave function collapse algorithm is a way of procedurally
           generating organic designs based on simple constraints, continue
           further to find out more!
