@@ -1,23 +1,24 @@
 import { React, useState } from "react";
-import COLOR_MAP from "../Colors.js";
+import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals.js";
 import TileEditor from "./TileEditor.jsx";
 
 const TileConstraintVisualizer = () => {
-  const [colorData, setColorData] = useState(
-    Array(3).fill(Array(9).fill("white"))
-  );
+  const [tiles, setTiles] = useState(() => {
+    let array = [];
+    for (let i = 0; i < 3; i++) {
+      array[i] = new TileData();
+    }
+    return array;
+  });
   const updateColorData = (index, newData) => {
-    console.log(
-      `Changing data in TileConstraintVisualizer with index of ${index} and data of ${newData}`
-    );
-    let newArr = [...colorData];
-    newArr[index] = newData;
-    setColorData(newArr);
+    let newArr = [...tiles];
+    newArr[index].updateColors(newData);
+    setTiles(newArr);
   };
 
   return (
     <div>
-      <TileEditor onTileUpdate={updateColorData} tileData={colorData} />
+      <TileEditor onTileUpdate={updateColorData} tiles={tiles} />
     </div>
   );
 };

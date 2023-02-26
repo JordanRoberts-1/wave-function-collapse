@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import COLOR_MAP from "../Colors.js";
+import COLOR_MAP from "../Globals.js";
 
 const TileCard = ({ onUpdate, globalIndex, colorData }) => {
   const [cardExpanded, setCardExpanded] = useState(false);
@@ -27,7 +27,7 @@ const TileCard = ({ onUpdate, globalIndex, colorData }) => {
   return (
     <li>
       <div
-        className="rounded-2xl bg-darkest/90 max-w-sm h-full p-8 flex flex-col items-center transform transition duration-300 hover:scale-110 backdrop-blur-lg hover:bg-darkest/100 cursor-pointer"
+        className="rounded-2xl bg-darkest/90 max-w-sm h-full p-8 flex flex-col items-center transform transition duration-300 hover:scale-110 backdrop-blur-lg hover:bg-darkest/100 hover:rounded-xl cursor-pointer"
         onClick={handleCardOpen}
       >
         <h1>Tile {`#${globalIndex}`}</h1>
@@ -35,11 +35,11 @@ const TileCard = ({ onUpdate, globalIndex, colorData }) => {
       {/* Expanded Card*/}
       {cardExpanded ? (
         <div
-          className="fixed z-20 w-screen h-screen left-0 top-0 grid place-items-center bg-coloredtext/10 backdrop-blur-lg"
+          className="fixed z-20 w-screen h-screen left-0 top-0 grid place-items-center bg-coloredtext/5 backdrop-blur-lg"
           onClick={handleCardOpen}
         >
           <div
-            className="animate-growFromNothing grid grid-rows-1 grid-cols-[70%_30%] fixed z-30 w-[80%] h-[90%] bg-gradient-to-bl from-darkest to-dark rounded-xl"
+            className="animate-growFromNothing grid grid-rows-1 grid-cols-[70%_30%] fixed z-30 w-[80%] h-[90%] bg-gradient-to-bl from-darkest to-dark rounded-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/*tile color grid*/}
