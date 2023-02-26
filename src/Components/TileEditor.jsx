@@ -8,12 +8,19 @@ const TileEditor = ({ onTileUpdate, tileData }) => {
   };
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-b from-black to-darkest">
-      <TileCard
-        onUpdate={handleUpdateTileData}
-        globalIndex={0}
-        colorData={tileData[0]}
-      />
+    <div className="w-screen h-screen bg-gradient-to-b from-black to-darkest flex flex-col items-center">
+      <ol className="w-fit grid grid-rows- grid-cols-3 gap-2 place-items-center">
+        {tileData?.map((tileColors, index) => {
+          return (
+            <TileCard
+              key={index}
+              onUpdate={handleUpdateTileData}
+              globalIndex={index}
+              colorData={tileColors}
+            />
+          );
+        })}
+      </ol>
     </div>
   );
 };

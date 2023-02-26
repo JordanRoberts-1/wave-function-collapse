@@ -37,11 +37,20 @@ module.exports = {
           "80%": { transform: "translateY(0%)", opacity: 100 },
           "100%": { transform: "translateY(0%)", opacity: 0 },
         },
+        growFromNothing: {
+          "0%": { transform: "scale(0)", opacity: 0 },
+          "100%": { transform: "scale(1)", opacity: 100 },
+        },
       },
       animation: {
+        growFromNothing: "growFromNothing 125ms 0s ease-in-out forwards",
         jiggle: "jiggle 250ms 0s ease-in-out forwards",
         "fade-in-up": "fadeinup 750ms 1s ease-in-out forwards",
         "fade-in-up-fade-out": "fadeinupfadeout 5s 0s ease-in-out forwards",
+      },
+      padding: {
+        "1/2": "50%",
+        full: "100%",
       },
     },
     screens: {
