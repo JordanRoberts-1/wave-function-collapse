@@ -35,7 +35,7 @@ const TileCard = ({ onUpdate, globalIndex, colorData }) => {
       {/* Expanded Card*/}
       {cardExpanded ? (
         <div
-          className="fixed z-20 w-screen h-screen left-0 top-0 grid place-items-center bg-black/60 backdrop-blur-lg"
+          className="fixed z-20 w-screen h-screen left-0 top-0 grid place-items-center bg-coloredtext/10 backdrop-blur-lg"
           onClick={handleCardOpen}
         >
           <div
@@ -43,7 +43,7 @@ const TileCard = ({ onUpdate, globalIndex, colorData }) => {
             onClick={(e) => e.stopPropagation()}
           >
             {/*tile color grid*/}
-            <div className="flex flex-row items-center p-10 m-8 border-r-2 border-r-coloredtext/25">
+            <div className="flex flex-row items-center justify-center p-10 m-4 my-8 border-r-2 border-r-coloredtext/25">
               <div className="grid grid-rows-3 grid-cols-3 place-items-center gap-2 w-[90%] max-w-[90%]">
                 {colorData?.map((color, index) => {
                   return (
@@ -58,8 +58,8 @@ const TileCard = ({ onUpdate, globalIndex, colorData }) => {
               </div>
             </div>
             {/*Right side tool menu*/}
-            <div className="flex flex-col gap-4 m-8">
-              <h1 className="text-5xl w-full text-center ">
+            <div className="flex flex-col gap-4 m-4 my-8">
+              <h1 className="text-5xl w-full text-center font-sans text-coloredtext border-b-2 pb-4 border-b-coloredtext/25">
                 Tile {`#${globalIndex}`}
               </h1>
               {Object.keys(COLOR_MAP).map((color, index) => {
