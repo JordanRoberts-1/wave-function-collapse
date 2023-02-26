@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals.js";
 import TileEditor from "./TileEditor.jsx";
 
+//TODO: REMOVE THIS WHOLE FILE, IT'S UNNECESSARY
 const TileConstraintVisualizer = () => {
   const [tiles, setTiles] = useState(() => {
     let array = [];
@@ -10,6 +11,14 @@ const TileConstraintVisualizer = () => {
     }
     return array;
   });
+
+  const updateConstraintData = (index, constraintKey, newValue) => {
+    let newArr = [...tiles];
+    newArr[index].updateConstraint(constraintKey, newValue);
+    setTiles(newArr);
+    console.log(tiles);
+  };
+
   const updateColorData = (index, newData) => {
     let newArr = [...tiles];
     newArr[index].updateColors(newData);
@@ -18,7 +27,11 @@ const TileConstraintVisualizer = () => {
 
   return (
     <div>
-      <TileEditor onTileUpdate={updateColorData} tiles={tiles} />
+      <TileEditor
+        onColorUpdate={updateColorData}
+        onConstraintUpdate={updateConstraintData}
+        tiles={tiles}
+      />
     </div>
   );
 };

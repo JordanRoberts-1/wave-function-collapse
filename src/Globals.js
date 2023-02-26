@@ -10,6 +10,12 @@ const TILE_SIZE = 9;
 class TileData {
   constructor() {
     this.data = {};
+    this.data.constraints = {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    };
     this.data.colors = Array(TILE_SIZE).fill("white");
   }
 
@@ -21,8 +27,16 @@ class TileData {
     this.data.colors = newColors;
   }
 
+  updateConstraint(constraintKey, newValue) {
+    this.data.constraints[constraintKey] = newValue;
+  }
+
   getColors() {
     return this.data.colors;
+  }
+
+  getConstraint(key) {
+    return this.data.constraints[key];
   }
 }
 

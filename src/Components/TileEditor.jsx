@@ -2,9 +2,13 @@ import { React } from "react";
 import TileCard from "./TileCard";
 import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals";
 
-const TileEditor = ({ onTileUpdate, tiles }) => {
-  const handleUpdateTileData = (index, newData) => {
-    onTileUpdate(index, newData);
+const TileEditor = ({ onColorUpdate, onConstraintUpdate, tiles }) => {
+  const handleUpdateConstraintChange = (index, constraintKey, newValue) => {
+    onConstraintUpdate(index, constraintKey, newValue);
+  };
+
+  const handleUpdateColorData = (index, newColors) => {
+    onColorUpdate(index, newColors);
   };
 
   return (
@@ -14,9 +18,10 @@ const TileEditor = ({ onTileUpdate, tiles }) => {
           return (
             <TileCard
               key={index}
-              onUpdate={handleUpdateTileData}
+              onUpdateConstraints={handleUpdateConstraintChange}
+              onUpdateColors={handleUpdateColorData}
               globalIndex={index}
-              colorData={tileData.getColors()}
+              tileData={tileData}
             />
           );
         })}

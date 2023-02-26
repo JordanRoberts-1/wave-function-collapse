@@ -1,9 +1,16 @@
 import { React, useState, useEffect } from "react";
-import COLOR_MAP from "../Globals.js";
+import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals.js";
 
-const TileCard = ({ onUpdate, globalIndex, colorData }) => {
+const TileCard = ({
+  onUpdateColors,
+  onUpdateConstraints,
+  globalIndex,
+  tileData,
+}) => {
   const [cardExpanded, setCardExpanded] = useState(false);
   const [currentColor, setCurrentColor] = useState("white");
+
+  useEffect(() => {});
 
   const handleColorChange = (colorKey) => {
     setCurrentColor(colorKey);
@@ -13,7 +20,12 @@ const TileCard = ({ onUpdate, globalIndex, colorData }) => {
     setCardExpanded(!cardExpanded);
   };
 
+  const handleConstraintChange = (constraintKey, newValue) => {
+    onUpdateConstraints(globalIndex, constraintKey, newValue);
+  };
+
   const handleClick = (index, color) => {
+    colorData = tileData.getColors();
     colorData = colorData?.map((c, i) => {
       if (i === index) {
         return color;
@@ -21,7 +33,7 @@ const TileCard = ({ onUpdate, globalIndex, colorData }) => {
         return c;
       }
     });
-    onUpdate(globalIndex, colorData);
+    onUpdateColors(globalIndex, colorData);
   };
 
   return (
@@ -44,18 +56,52 @@ const TileCard = ({ onUpdate, globalIndex, colorData }) => {
           >
             {/*tile color grid*/}
             <div className="flex flex-row items-center justify-center p-10 m-4 my-8 border-r-2 border-r-coloredtext/25">
-              <div className="grid grid-rows-3 grid-cols-3 place-items-center gap-2 w-[90%] max-w-[90%]">
-                {colorData?.map((color, index) => {
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => handleClick(index, currentColor)}
-                      style={{ background: `${COLOR_MAP[color]}` }}
-                      className="w-full h-0 shadow-lg pb-full rounded-lg"
-                    ></button>
-                  );
-                })}
+              <input
+                type="number"
+                value={tileData.getConstraint("left")}
+                className="w-24 h-8 mr-4 text-2xl bg-coloredtext/25 rounded-xl p-2"
+                onChange={(e) => {
+                  handleConstraintChange("left", e.target.value);
+                }}
+              ></input>
+              <div className="flex flex-col items-center justify-center w-[100%] h-[100%]">
+                <input
+                  type="number"
+                  value={tileData.getConstraint("top")}
+                  className="w-24 h-8 mb-8 text-2xl bg-coloredtext/25 rounded-xl p-2"
+                  onChange={(e) => {
+                    handleConstraintChange("top", e.target.value);
+                  }}
+                ></input>
+                <div className="grid grid-rows-3 grid-cols-3 place-items-center gap-2 w-[90%] max-w-[90%]">
+                  {tileData?.getColors()?.map((color, index) => {
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => handleClick(index, currentColor)}
+                        style={{ background: `${COLOR_MAP[color]}` }}
+                        className="w-full h-0 shadow-lg pb-full rounded-lg"
+                      ></button>
+                    );
+                  })}
+                </div>
+                <input
+                  type="number"
+                  value={tileData.getConstraint("bottom")}
+                  className="w-24 h-8 mt-8 text-2xl bg-coloredtext/25 rounded-xl p-2"
+                  onChange={(e) => {
+                    handleConstraintChange("bottom", e.target.value);
+                  }}
+                ></input>
               </div>
+              <input
+                type="number"
+                value={tileData.getConstraint("right")}
+                className="w-24 h-8 ml-4 text-2xl bg-coloredtext/25 rounded-xl p-2"
+                onChange={(e) => {
+                  handleConstraintChange("right", e.target.value);
+                }}
+              ></input>
             </div>
             {/*Right side tool menu*/}
             <div className="flex flex-col gap-4 m-4 my-8">
