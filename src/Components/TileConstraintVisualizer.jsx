@@ -8,7 +8,7 @@ const TileConstraintVisualizer = () => {
   const [tiles, setTiles] = useState(() => {
     let array = [];
     for (let i = 0; i < 3; i++) {
-      array[i] = new TileData();
+      array[i] = new TileData(i);
     }
     return array;
   });

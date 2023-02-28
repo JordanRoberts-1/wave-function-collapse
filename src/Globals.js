@@ -8,7 +8,7 @@ const COLOR_MAP = {
 const TILE_SIZE = 3;
 
 class TileData {
-  constructor() {
+  constructor(index) {
     this.data = {};
     this.data.constraints = {
       top: 0,
@@ -17,6 +17,7 @@ class TileData {
       left: 0,
     };
     this.data.colors = Array(TILE_SIZE * TILE_SIZE).fill("white");
+    this.data.tileIndex = index;
   }
 
   updateData(newData) {
@@ -37,6 +38,10 @@ class TileData {
 
   getConstraint(key) {
     return this.data.constraints[key];
+  }
+
+  getTileIndex() {
+    return this.data.tileIndex;
   }
 }
 
