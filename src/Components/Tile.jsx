@@ -1,10 +1,9 @@
 import { React, useState, useEffect } from "react";
 import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals";
 
-const Tile = ({ tileData }) => {
+const Tile = ({ tileData, gridTileIndex }) => {
   const [gridRows, setGridRows] = useState(`grid-rows-${TILE_SIZE}`);
   const [gridCols, setGridCols] = useState(`grid-cols-${TILE_SIZE}`);
-  const [tileIndex, setTileIndex] = useState(tileData.getTileIndex());
 
   return (
     <div

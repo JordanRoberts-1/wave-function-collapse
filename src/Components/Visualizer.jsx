@@ -14,7 +14,13 @@ const Visualizer = ({ tiles }) => {
         {gridData?.map((gridTileIndex, index) => {
           const tileData = tiles[gridTileIndex];
           console.log(tileData);
-          return <Tile key={index} tileData={tileData} />;
+          return (
+            <Tile
+              key={index}
+              tileData={tileData}
+              gridTileIndex={gridTileIndex}
+            />
+          );
         })}
       </div>
     </div>
