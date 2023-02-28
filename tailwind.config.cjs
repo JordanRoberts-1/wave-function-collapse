@@ -52,6 +52,14 @@ module.exports = {
         "1/2": "50%",
         full: "100%",
       },
+      gridTemplateColumns: {
+        16: "repeat(16, minmax(0, 1fr))",
+        32: "repeat(32, minmax(0, 1fr))",
+      },
+      gridTemplateRows: {
+        16: "repeat(16, minmax(0, 1fr))",
+        32: "repeat(32, minmax(0, 1fr))",
+      },
     },
     screens: {
       xs: "480px",

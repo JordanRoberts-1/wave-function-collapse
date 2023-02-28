@@ -25,7 +25,7 @@ const TileCard = ({
   };
 
   const handleClick = (index, color) => {
-    colorData = tileData.getColors();
+    let colorData = tileData.getColors();
     colorData = colorData?.map((c, i) => {
       if (i === index) {
         return color;

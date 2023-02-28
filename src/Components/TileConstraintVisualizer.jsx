@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals.js";
 import TileEditor from "./TileEditor.jsx";
+import Visualizer from "./Visualizer.jsx";
 
 //TODO: REMOVE THIS WHOLE FILE, IT'S UNNECESSARY
 const TileConstraintVisualizer = () => {
@@ -32,6 +33,7 @@ const TileConstraintVisualizer = () => {
         onConstraintUpdate={updateConstraintData}
         tiles={tiles}
       />
+      <Visualizer tiles={tiles} />
     </div>
   );
 };

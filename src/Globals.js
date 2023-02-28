@@ -5,7 +5,7 @@ const COLOR_MAP = {
   blue: "#0000FF",
 };
 
-const TILE_SIZE = 9;
+const TILE_SIZE = 3;
 
 class TileData {
   constructor() {
@@ -16,7 +16,7 @@ class TileData {
       bottom: 0,
       left: 0,
     };
-    this.data.colors = Array(TILE_SIZE).fill("white");
+    this.data.colors = Array(TILE_SIZE * TILE_SIZE).fill("white");
   }
 
   updateData(newData) {
