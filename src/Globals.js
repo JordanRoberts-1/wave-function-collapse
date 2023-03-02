@@ -96,6 +96,7 @@ class GridData {
   }
 
   updateOptions(neighborsObject, tiles) {
+    let changedFlag = false;
     for (const option of this.data.totalOptions) {
       const optionConstraints = tiles[option].getConstraints();
       let dirsMatch = true;
@@ -119,8 +120,10 @@ class GridData {
 
       if (dirsMatch !== true) {
         this.data.totalOptions.delete(option);
+        changedFlag = true;
       }
     }
+    return changedFlag;
   }
 }
 

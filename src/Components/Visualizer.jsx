@@ -21,11 +21,7 @@ const Visualizer = ({ tiles }) => {
       return;
     }
     //Run the algorithm
-    setIntervalId(
-      setInterval(() => {
-        updateLoop();
-      }, 2000)
-    );
+    setIntervalId(setInterval(updateLoop, 2000));
   };
 
   const handleStopVisualization = () => {
@@ -62,17 +58,33 @@ const Visualizer = ({ tiles }) => {
     const y = 8;
     const index = y * 16 + x;
 
-    const currentGrid = gridData[index];
-    const neighborsGridData = getNeighborsObject(x, y);
-
     setGridData((oldData) => {
       const newGrid = [...oldData];
+
+      let gridStack = [];
+      let closedSet = new Set();
+
       newGrid[index].setChoice(2);
-      for (const [key, neighbor] of Object.entries(neighborsGridData)) {
-        const [xNeighbor, yNeighbor] = neighbor.getPos();
-        const n = getNeighborsObject(xNeighbor, yNeighbor);
-        neighbor.updateOptions(n, tiles);
+      for (const [key, neighbor] of Object.entries(getNeighborsObject(x, y))) {
+        gridStack.push(neighbor);
       }
+
+      do {
+        const current = gridStack.pop();
+        const [x, y] = current.getPos();
+        console.log(`${x}, ${y}`);
+        const neighborsGridData = getNeighborsObject(x, y);
+        if (closedSet.has(current)) {
+          continue;
+        }
+        const nodeUpdated = current.updateOptions(neighborsGridData, tiles);
+        if (nodeUpdated) {
+          for (const [key, neighbor] of Object.entries(neighborsGridData)) {
+            gridStack.push(neighbor);
+          }
+        }
+        closedSet.add(current);
+      } while (gridStack.length !== 0);
       return newGrid;
     });
   };
