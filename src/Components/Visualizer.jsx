@@ -121,18 +121,28 @@ const Visualizer = ({ tiles }) => {
   };
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-b from-darkest to-light flex flex-row items-center">
-      <div className="w-[40vw] h-[40vw] grid grid-cols-16 grid-rows-16 m-16">
-        {gridData?.map((gridData, index) => {
-          return <Tile key={index} tiles={tiles} gridData={gridData} />;
-        })}
+    <div className="w-screen h-screen bg-gradient-to-b from-darkest to-light flex flex-row gap-8 items-center justify-center">
+      <div className="rounded-2xl w-[40vw] h-[40vw] border border-coloredtext/25 bg-darkest p-8">
+        <div className="w-full h-full grid grid-cols-16 grid-rows-16">
+          {gridData?.map((gridData, index) => {
+            return <Tile key={index} tiles={tiles} gridData={gridData} />;
+          })}
+        </div>
       </div>
-      <button className="border bg-gray-600" onClick={handleStartVisualization}>
-        Start Visualization
-      </button>{" "}
-      <button className="border bg-gray-600" onClick={handleStopVisualization}>
-        End Visualization
-      </button>
+      <div className="bg-darkest p-8 rounded-2xl border border-coloredtext/25 flex flex-col gap-4">
+        <button
+          className="bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans"
+          onClick={handleStartVisualization}
+        >
+          Start Visualization
+        </button>{" "}
+        <button
+          className="bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans"
+          onClick={handleStopVisualization}
+        >
+          End Visualization
+        </button>
+      </div>
     </div>
   );
 };
