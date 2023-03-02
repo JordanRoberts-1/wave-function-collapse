@@ -50,6 +50,22 @@ const Visualizer = ({ tiles }) => {
     setIntervalId(setInterval(() => updateLoop(), 200));
   };
 
+  const handleReset = () => {
+    clearInterval(intervalId);
+    setIntervalId(0);
+    setGridData(() => {
+      let array = [];
+      for (let y = 0; y < GRID_HEIGHT; y++) {
+        for (let x = 0; x < GRID_WIDTH; x++) {
+          const index = y * GRID_WIDTH + x;
+          array[index] = new GridData(index, tiles.length);
+        }
+      }
+      openSet.current = new Set(array);
+      return array;
+    });
+  };
+
   const indexFromPos = (x, y) => {
     if (x < 0) {
       x += GRID_WIDTH;
@@ -169,6 +185,12 @@ const Visualizer = ({ tiles }) => {
           onClick={handleStopVisualization}
         >
           End Visualization
+        </button>
+        <button
+          className="bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans"
+          onClick={handleReset}
+        >
+          Reset
         </button>
         <span className="w-full h-0 border-b-2 border-coloredtext/25"></span>
         <h1 className="font-sans text-xl text-white text-center">
