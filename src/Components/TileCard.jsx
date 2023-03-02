@@ -57,23 +57,23 @@ const TileCard = ({
           >
             {/*tile color grid*/}
             <div className="flex flex-row items-center justify-center p-10 m-4 my-8 border-r-2 border-r-coloredtext/25">
-              <input
+              {/* <input
                 type="number"
-                value={tileData.getConstraint("left")}
+                value={tileData.getEdge("left")}
                 className="w-24 h-8 mr-4 text-2xl bg-coloredtext/25 rounded-xl p-2"
                 onChange={(e) => {
                   handleConstraintChange("left", e.target.value);
                 }}
-              ></input>
+              ></input> */}
               <div className="flex flex-col items-center justify-center w-[100%] h-[100%]">
-                <input
+                {/* <input
                   type="number"
-                  value={tileData.getConstraint("top")}
+                  value={tileData.getEdge("top")}
                   className="w-24 h-8 mb-8 text-2xl bg-coloredtext/25 rounded-xl p-2"
                   onChange={(e) => {
                     handleConstraintChange("top", e.target.value);
                   }}
-                ></input>
+                ></input> */}
                 <div className="grid grid-rows-3 grid-cols-3 place-items-center gap-2 w-[90%] max-w-[90%]">
                   {tileData?.getColors()?.map((color, index) => {
                     return (
@@ -86,23 +86,23 @@ const TileCard = ({
                     );
                   })}
                 </div>
-                <input
+                {/* <input
                   type="number"
-                  value={tileData.getConstraint("bottom")}
+                  value={tileData.getEdge("bottom")}
                   className="w-24 h-8 mt-8 text-2xl bg-coloredtext/25 rounded-xl p-2"
                   onChange={(e) => {
                     handleConstraintChange("bottom", e.target.value);
                   }}
-                ></input>
+                ></input> */}
               </div>
-              <input
+              {/* <input
                 type="number"
-                value={tileData.getConstraint("right")}
+                value={tileData.getEdge("right")}
                 className="w-24 h-8 ml-4 text-2xl bg-coloredtext/25 rounded-xl p-2"
                 onChange={(e) => {
                   handleConstraintChange("right", e.target.value);
                 }}
-              ></input>
+              ></input> */}
             </div>
             {/*Right side tool menu*/}
             <div className="flex flex-col gap-4 m-4 my-8">

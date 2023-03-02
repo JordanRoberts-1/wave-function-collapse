@@ -17,14 +17,28 @@ const NEIGHBOR_KEY_MAP = {
   left: "right",
 };
 
+const indexFromPos = (x, y) => {
+  return y * TILE_SIZE + x;
+};
+
+const compareEdge = (edge1, edge2) => {
+  const edge2Reversed = [...edge2].reverse();
+  for (let i = 0; i < edge1.length; i++) {
+    if (edge1[i] != edge2Reversed[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 class TileData {
   constructor(index) {
     this.data = {};
-    this.data.constraints = {
-      top: 1,
-      right: 1,
-      bottom: 1,
-      left: 1,
+    this.data.edges = {
+      top: Array(TILE_SIZE).fill("white"),
+      right: Array(TILE_SIZE).fill("white"),
+      bottom: Array(TILE_SIZE).fill("white"),
+      left: Array(TILE_SIZE).fill("white"),
     };
     this.data.colors = Array(TILE_SIZE * TILE_SIZE).fill("white");
     this.data.tileIndex = index;
@@ -36,22 +50,44 @@ class TileData {
 
   updateColors(newColors) {
     this.data.colors = newColors;
+
+    let x = 0;
+    let y = 0;
+    this.data.edges = { top: [], right: [], bottom: [], left: [] };
+    for (x = 0; x < TILE_SIZE; x++) {
+      this.data.edges.top.push(newColors[indexFromPos(x, y)]);
+    }
+
+    x = TILE_SIZE - 1;
+    for (y = 0; y < TILE_SIZE; y++) {
+      this.data.edges.right.push(newColors[indexFromPos(x, y)]);
+    }
+
+    y = TILE_SIZE - 1;
+    for (x = TILE_SIZE - 1; x >= 0; x--) {
+      this.data.edges.bottom.push(newColors[indexFromPos(x, y)]);
+    }
+
+    x = 0;
+    for (y = TILE_SIZE - 1; y >= 0; y--) {
+      this.data.edges.left.push(newColors[indexFromPos(x, y)]);
+    }
   }
 
-  updateConstraint(constraintKey, newValue) {
-    this.data.constraints[constraintKey] = parseInt(newValue);
+  updateEdge(constraintKey, newValue) {
+    this.data.edges[constraintKey] = parseInt(newValue);
   }
 
   getColors() {
     return this.data.colors;
   }
 
-  getConstraint(key) {
-    return this.data.constraints[key];
+  getEdge(key) {
+    return this.data.edges[key];
   }
 
-  getConstraints() {
-    return this.data.constraints;
+  getEdges() {
+    return this.data.edges;
   }
 
   getTileIndex() {
@@ -121,27 +157,27 @@ class GridData {
   updateOptions(neighborsObject, tiles) {
     let changedFlag = false;
     for (const option of this.data.totalOptions) {
-      const optionConstraints = tiles[option].getConstraints();
+      const edges = tiles[option].getEdges();
       let dirsMatch = true;
       for (const [direction, neighborGridData] of Object.entries(
         neighborsObject
       )) {
-        const currConstraint = optionConstraints[direction];
+        const currEdge = edges[direction];
         const neighborOppDirection = NEIGHBOR_KEY_MAP[direction];
         let currDirMatch = false;
         for (const neighborOption of neighborGridData.getOptions()) {
-          const neighborConstraint =
-            tiles[neighborOption].getConstraint(neighborOppDirection);
-          if (currConstraint === neighborConstraint) {
+          const neighborEdge =
+            tiles[neighborOption].getEdge(neighborOppDirection);
+          if (compareEdge(currEdge, neighborEdge)) {
             currDirMatch = true;
           }
         }
-        if (currDirMatch === false) {
+        if (currDirMatch == false) {
           dirsMatch = false;
         }
       }
 
-      if (dirsMatch !== true) {
+      if (dirsMatch == false) {
         this.data.totalOptions.delete(option);
         changedFlag = true;
       }
