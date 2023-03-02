@@ -21,6 +21,7 @@ const TileCard = ({
   };
 
   const handleConstraintChange = (constraintKey, newValue) => {
+    if (newValue < 1) newValue = 1;
     onUpdateConstraints(globalIndex, constraintKey, newValue);
   };
 
