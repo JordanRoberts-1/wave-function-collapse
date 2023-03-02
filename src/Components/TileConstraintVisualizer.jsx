@@ -16,7 +16,6 @@ const TileConstraintVisualizer = () => {
     let newArr = [...tiles];
     newArr[index].updateConstraint(constraintKey, newValue);
     setTiles(newArr);
-    console.log(tiles);
   };
 
   const updateColorData = (index, newData) => {

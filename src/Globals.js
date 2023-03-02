@@ -92,6 +92,17 @@ class GridData {
     return this.data.tileChoice;
   }
 
+  collapse() {
+    if (this.getEntropy() === 0) {
+      return false;
+    }
+    let optionsArray = Array.from(this.data.totalOptions);
+    this.setChoice(
+      optionsArray[Math.floor(Math.random() * optionsArray.length)]
+    );
+    return true;
+  }
+
   setChoice(tileIndex) {
     this.data.tileChoice = tileIndex;
     this.data.totalOptions.clear();

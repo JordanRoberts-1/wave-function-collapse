@@ -59,21 +59,34 @@ const Visualizer = ({ tiles }) => {
   };
 
   const updateLoop = () => {
-    console.log(`updateloop: ${openSet.current.size}`);
+    if (openSet.size === 0) {
+      clearInterval(intervalId);
+      setIntervalId(0);
+      return;
+    }
+
     let openSetArray = Array.from(openSet.current).sort((a, b) => {
       return a.getEntropy() - b.getEntropy();
     });
 
     //Find all the minimum values
-    let startingValue = openSetArray[0].getEntropy();
     let startingGridTile = openSetArray[0];
+    if (!startingGridTile) return;
+
+    let startingValue = startingGridTile.getEntropy();
     for (const i in openSetArray) {
-      if (openSetArray[i].getEntropy != startingValue) {
+      if (openSetArray[i].getEntropy() != startingValue) {
         let slicedArray = openSetArray.slice(0, i);
         startingGridTile = slicedArray[Math.floor(Math.random() * i)];
+        break;
       }
     }
-    console.log(startingGridTile);
+
+    const choicesLeft = startingGridTile.collapse();
+    if (!choicesLeft) {
+      return;
+    }
+
     const index = startingGridTile.getIndex();
     const [x, y] = startingGridTile.getPos();
 
@@ -83,7 +96,6 @@ const Visualizer = ({ tiles }) => {
       let gridStack = [];
       let closedSet = new Set();
 
-      startingGridTile.setChoice(2);
       for (const [key, neighbor] of Object.entries(getNeighborsObject(x, y))) {
         gridStack.push(neighbor);
       }
@@ -105,7 +117,6 @@ const Visualizer = ({ tiles }) => {
       } while (gridStack.length !== 0);
       return newGrid;
     });
-
     openSet.current.delete(gridData[index]);
   };
 
