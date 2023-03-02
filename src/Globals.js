@@ -103,6 +103,10 @@ class GridData {
     return true;
   }
 
+  isCollapsed() {
+    return this.data.collapsed;
+  }
+
   setChoice(tileIndex) {
     this.data.tileChoice = tileIndex;
     this.data.totalOptions.clear();

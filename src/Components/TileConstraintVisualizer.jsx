@@ -6,7 +6,7 @@ import Visualizer from "./Visualizer.jsx";
 const TileConstraintVisualizer = () => {
   const [tiles, setTiles] = useState(() => {
     let array = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
       array[i] = new TileData(i);
     }
     return array;
