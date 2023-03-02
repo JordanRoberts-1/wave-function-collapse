@@ -75,9 +75,11 @@ const Visualizer = ({ tiles }) => {
 
     let startingValue = startingGridTile.getEntropy();
     for (const i in openSetArray) {
-      if (openSetArray[i].getEntropy() != startingValue) {
-        let slicedArray = openSetArray.slice(0, i);
-        startingGridTile = slicedArray[Math.floor(Math.random() * i)];
+      if (
+        openSetArray[i].getEntropy() != startingValue ||
+        i == openSetArray.length - 1
+      ) {
+        startingGridTile = openSetArray[Math.floor(Math.random() * i)];
         break;
       }
     }
