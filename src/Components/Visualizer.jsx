@@ -34,6 +34,17 @@ const Visualizer = ({ tiles }) => {
   };
 
   const indexFromPos = (x, y) => {
+    if (x < 0) {
+      x += GRID_WIDTH;
+    } else if (x >= GRID_WIDTH) {
+      x %= GRID_WIDTH;
+    }
+
+    if (y < 0) {
+      y += GRID_HEIGHT;
+    } else if (y >= GRID_HEIGHT) {
+      y %= GRID_HEIGHT;
+    }
     return y * GRID_WIDTH + x;
   };
 
