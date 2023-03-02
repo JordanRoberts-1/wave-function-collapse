@@ -80,6 +80,10 @@ class GridData {
     ];
   }
 
+  getIndex() {
+    return this.data.posIndex;
+  }
+
   getEntropy() {
     return this.data.totalOptions.size;
   }

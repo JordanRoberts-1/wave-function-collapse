@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { GRID_WIDTH, GRID_HEIGHT, GridData } from "../Globals";
 import Tile from "./Tile";
 
@@ -15,13 +15,18 @@ const Visualizer = ({ tiles }) => {
   });
 
   const [intervalId, setIntervalId] = useState(0);
+  const openSet = useRef();
+
+  useEffect(() => {
+    openSet.current = new Set(gridData);
+  }, []);
 
   const handleStartVisualization = () => {
     if (intervalId !== 0) {
       return;
     }
     //Run the algorithm
-    setIntervalId(setInterval(updateLoop, 2000));
+    setIntervalId(setInterval(() => updateLoop(), 200));
   };
 
   const handleStopVisualization = () => {
@@ -54,9 +59,23 @@ const Visualizer = ({ tiles }) => {
   };
 
   const updateLoop = () => {
-    const x = 8;
-    const y = 8;
-    const index = y * 16 + x;
+    console.log(`updateloop: ${openSet.current.size}`);
+    let openSetArray = Array.from(openSet.current).sort((a, b) => {
+      return a.getEntropy() - b.getEntropy();
+    });
+
+    //Find all the minimum values
+    let startingValue = openSetArray[0].getEntropy();
+    let startingGridTile = openSetArray[0];
+    for (const i in openSetArray) {
+      if (openSetArray[i].getEntropy != startingValue) {
+        let slicedArray = openSetArray.slice(0, i);
+        startingGridTile = slicedArray[Math.floor(Math.random() * i)];
+      }
+    }
+    console.log(startingGridTile);
+    const index = startingGridTile.getIndex();
+    const [x, y] = startingGridTile.getPos();
 
     setGridData((oldData) => {
       const newGrid = [...oldData];
@@ -64,7 +83,7 @@ const Visualizer = ({ tiles }) => {
       let gridStack = [];
       let closedSet = new Set();
 
-      newGrid[index].setChoice(2);
+      startingGridTile.setChoice(2);
       for (const [key, neighbor] of Object.entries(getNeighborsObject(x, y))) {
         gridStack.push(neighbor);
       }
@@ -72,7 +91,6 @@ const Visualizer = ({ tiles }) => {
       do {
         const current = gridStack.pop();
         const [x, y] = current.getPos();
-        console.log(`${x}, ${y}`);
         const neighborsGridData = getNeighborsObject(x, y);
         if (closedSet.has(current)) {
           continue;
@@ -87,6 +105,8 @@ const Visualizer = ({ tiles }) => {
       } while (gridStack.length !== 0);
       return newGrid;
     });
+
+    openSet.current.delete(gridData[index]);
   };
 
   return (
