@@ -1,15 +1,18 @@
-import { React, useState, useEffect } from "react";
-import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals";
+import { React, useState } from "react";
+import COLOR_MAP, { TILE_SIZE } from "../Globals";
 
-const Tile = ({ tileData, gridTileIndex }) => {
+const Tile = ({ tiles, gridData }) => {
   const [gridRows, setGridRows] = useState(`grid-rows-${TILE_SIZE}`);
   const [gridCols, setGridCols] = useState(`grid-cols-${TILE_SIZE}`);
 
   return (
     <div
-      className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full border`}
+      className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full border relative`}
     >
-      {tileData?.getColors()?.map((color, index) => {
+      <div className="absolute z-100 text-black text-xs text-center">
+        {`c: ${gridData.getChoice()}, e: ${gridData.getEntropy()}`}
+      </div>
+      {tiles[gridData.getChoice()]?.getColors()?.map((color, index) => {
         return (
           <div
             key={index}

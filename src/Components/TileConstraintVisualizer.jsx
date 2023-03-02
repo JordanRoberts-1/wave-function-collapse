@@ -3,11 +3,10 @@ import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals.js";
 import TileEditor from "./TileEditor.jsx";
 import Visualizer from "./Visualizer.jsx";
 
-//TODO: REMOVE THIS WHOLE FILE, IT'S UNNECESSARY
 const TileConstraintVisualizer = () => {
   const [tiles, setTiles] = useState(() => {
     let array = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 3; i++) {
       array[i] = new TileData(i);
     }
     return array;
