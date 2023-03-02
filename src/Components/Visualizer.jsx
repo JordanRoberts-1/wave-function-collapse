@@ -173,27 +173,27 @@ const Visualizer = ({ tiles }) => {
           })}
         </div>
       </div>
-      <div className="bg-darkest p-8 rounded-2xl border border-coloredtext/25 flex flex-col gap-4">
+      <div className="bg-darkest rounded-2xl border border-coloredtext/25 flex flex-col">
         <button
-          className="bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans"
+          className="bg-darkest p-4 rounded-t-2xl border-coloredtext/25 hover:bg-light font-sans"
           onClick={handleStartVisualization}
         >
           Start Visualization
         </button>
         <button
-          className="bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans"
+          className="bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans"
           onClick={handleStopVisualization}
         >
           End Visualization
         </button>
         <button
-          className="bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans"
+          className="bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans"
           onClick={handleReset}
         >
           Reset
         </button>
-        <span className="w-full h-0 border-b-2 border-coloredtext/25"></span>
-        <h1 className="font-sans text-xl text-white text-center">
+        <span className="w-full h-0 border-b-4 border-coloredtext/25 mb-4"></span>
+        <h1 className="font-sans text-2xl text-white text-center mb-4">
           Manual Mode
         </h1>
         {tiles?.map((tileData, index) => {
@@ -203,9 +203,9 @@ const Visualizer = ({ tiles }) => {
           return (
             <button
               key={index}
-              className={`bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans ${
+              className={`bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans ${
                 tileSelection == index ? "bg-light" : ""
-              }`}
+              } ${index == tiles.length - 1 ? "rounded-b-2xl" : ""}`}
               onClick={() => handleTileSelection(index)}
             >
               Tile {`#${index}`}
