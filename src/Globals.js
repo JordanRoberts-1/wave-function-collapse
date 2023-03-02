@@ -92,6 +92,10 @@ class GridData {
     return this.data.tileChoice;
   }
 
+  isOption(index) {
+    return this.data.totalOptions.has(index);
+  }
+
   collapse() {
     if (this.getEntropy() === 0) {
       return false;

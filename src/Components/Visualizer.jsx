@@ -15,6 +15,7 @@ const Visualizer = ({ tiles }) => {
   });
 
   const [intervalId, setIntervalId] = useState(0);
+  const [tileSelection, setTileSelection] = useState(1);
   const openSet = useRef();
 
   useEffect(() => {
@@ -32,6 +33,21 @@ const Visualizer = ({ tiles }) => {
   const handleStopVisualization = () => {
     clearInterval(intervalId);
     setIntervalId(0);
+  };
+
+  const handleTileSelection = (index) => {
+    setTileSelection(index);
+  };
+
+  const handleManualSelection = (index) => {
+    console.log("Manually selecting");
+    clearInterval(intervalId);
+    const tile = gridData[index];
+    if (tile.isCollapsed() || !tile.isOption(tileSelection)) return;
+    tile.setChoice(tileSelection);
+    updateNeighbors(tile);
+    openSet.current.delete(tile);
+    setIntervalId(setInterval(() => updateLoop(), 200));
   };
 
   const indexFromPos = (x, y) => {
@@ -58,6 +74,38 @@ const Visualizer = ({ tiles }) => {
     };
   };
 
+  const updateNeighbors = (startingGridTile) => {
+    const index = startingGridTile.getIndex();
+    const [x, y] = startingGridTile.getPos();
+
+    setGridData((oldData) => {
+      const newGrid = [...oldData];
+
+      let gridStack = [];
+      let closedSet = new Set();
+
+      for (const [key, neighbor] of Object.entries(getNeighborsObject(x, y))) {
+        gridStack.push(neighbor);
+      }
+
+      do {
+        const current = gridStack.pop();
+        const [x, y] = current.getPos();
+        const neighborsGridData = getNeighborsObject(x, y);
+        if (closedSet.has(current)) {
+          continue;
+        }
+        const nodeUpdated = current.updateOptions(neighborsGridData, tiles);
+        if (nodeUpdated) {
+          for (const [key, neighbor] of Object.entries(neighborsGridData)) {
+            gridStack.push(neighbor);
+          }
+        }
+        closedSet.add(current);
+      } while (gridStack.length !== 0);
+      return newGrid;
+    });
+  };
   const updateLoop = () => {
     if (openSet.size === 0) {
       clearInterval(intervalId);
@@ -89,37 +137,8 @@ const Visualizer = ({ tiles }) => {
       return;
     }
 
-    const index = startingGridTile.getIndex();
-    const [x, y] = startingGridTile.getPos();
-
-    setGridData((oldData) => {
-      const newGrid = [...oldData];
-
-      let gridStack = [];
-      let closedSet = new Set();
-
-      for (const [key, neighbor] of Object.entries(getNeighborsObject(x, y))) {
-        gridStack.push(neighbor);
-      }
-
-      do {
-        const current = gridStack.pop();
-        const [x, y] = current.getPos();
-        const neighborsGridData = getNeighborsObject(x, y);
-        if (closedSet.has(current)) {
-          continue;
-        }
-        const nodeUpdated = current.updateOptions(neighborsGridData, tiles);
-        if (nodeUpdated) {
-          for (const [key, neighbor] of Object.entries(neighborsGridData)) {
-            gridStack.push(neighbor);
-          }
-        }
-        closedSet.add(current);
-      } while (gridStack.length !== 0);
-      return newGrid;
-    });
-    openSet.current.delete(gridData[index]);
+    updateNeighbors(startingGridTile);
+    openSet.current.delete(startingGridTile);
   };
 
   return (
@@ -127,7 +146,14 @@ const Visualizer = ({ tiles }) => {
       <div className="rounded-2xl w-[40vw] h-[40vw] border border-coloredtext/25 bg-darkest p-8">
         <div className="w-full h-full grid grid-cols-16 grid-rows-16">
           {gridData?.map((gridData, index) => {
-            return <Tile key={index} tiles={tiles} gridData={gridData} />;
+            return (
+              <Tile
+                key={index}
+                tiles={tiles}
+                gridData={gridData}
+                handleManualSelection={handleManualSelection}
+              />
+            );
           })}
         </div>
       </div>
@@ -137,13 +163,33 @@ const Visualizer = ({ tiles }) => {
           onClick={handleStartVisualization}
         >
           Start Visualization
-        </button>{" "}
+        </button>
         <button
           className="bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans"
           onClick={handleStopVisualization}
         >
           End Visualization
         </button>
+        <span className="w-full h-0 border-b-2 border-coloredtext/25"></span>
+        <h1 className="font-sans text-xl text-white text-center">
+          Manual Mode
+        </h1>
+        {tiles?.map((tileData, index) => {
+          if (index == 0) {
+            return;
+          }
+          return (
+            <button
+              key={index}
+              className={`bg-dark p-4 rounded-2xl border-coloredtext/25 hover:bg-light font-sans ${
+                tileSelection == index ? "bg-light" : ""
+              }`}
+              onClick={() => handleTileSelection(index)}
+            >
+              Tile {`#${index}`}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
