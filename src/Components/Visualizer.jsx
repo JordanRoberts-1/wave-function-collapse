@@ -40,7 +40,6 @@ const Visualizer = ({ tiles }) => {
   };
 
   const handleManualSelection = (index) => {
-    console.log("Manually selecting");
     clearInterval(intervalId);
     const tile = gridData[index];
     if (tile.isCollapsed() || !tile.isOption(tileSelection)) return;
@@ -122,6 +121,7 @@ const Visualizer = ({ tiles }) => {
       return newGrid;
     });
   };
+
   const updateLoop = () => {
     if (openSet.size === 0) {
       clearInterval(intervalId);

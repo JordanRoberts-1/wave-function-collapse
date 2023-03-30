@@ -5,13 +5,17 @@ const Tile = ({ tiles, gridData, handleManualSelection }) => {
   const [gridRows, setGridRows] = useState(`grid-rows-${TILE_SIZE}`);
   const [gridCols, setGridCols] = useState(`grid-cols-${TILE_SIZE}`);
 
+  const rotateMap = ["rotate-0", "rotate-90", "rotate-180", "-rotate-90"];
+
   return (
     <>
       {gridData.isCollapsed() ? (
         <div
-          className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full border relative`}
+          className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full border relative ${
+            rotateMap[gridData.getChoice()[1]]
+          }`}
         >
-          {tiles[gridData.getChoice()]?.getColors()?.map((color, index) => {
+          {tiles[gridData.getChoice()[0]]?.getColors()?.map((color, index) => {
             return (
               <div
                 key={index}

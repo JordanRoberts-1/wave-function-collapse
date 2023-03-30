@@ -21,16 +21,6 @@ const indexFromPos = (x, y) => {
   return y * TILE_SIZE + x;
 };
 
-const compareEdge = (edge1, edge2) => {
-  const edge2Reversed = [...edge2].reverse();
-  for (let i = 0; i < edge1.length; i++) {
-    if (edge1[i] != edge2Reversed[i]) {
-      return false;
-    }
-  }
-  return true;
-};
-
 class TileData {
   constructor(index) {
     this.data = {};
@@ -86,6 +76,23 @@ class TileData {
     return this.data.edges[key];
   }
 
+  getEdgesRotated(rotateIndex) {
+    const edges = this.getEdges();
+    let result = { ...edges };
+
+    const keys = Object.keys(edges);
+    for (const keyIndex in keys) {
+      const currentKey = parseInt(keyIndex);
+      result[keys[(currentKey + rotateIndex) % 4]] = edges[keys[currentKey]];
+    }
+    return result;
+  }
+
+  getEdgeRotated(key, rotateIndex) {
+    let edgesRotated = this.getEdgesRotated(rotateIndex);
+    return edgesRotated[key];
+  }
+
   getEdges() {
     return this.data.edges;
   }
@@ -99,9 +106,12 @@ class GridData {
   constructor(posIndex, numTiles) {
     this.data = {};
     this.data.posIndex = posIndex;
-    this.data.totalOptions = new Set(Array(numTiles).keys());
-    this.data.totalOptions.delete(0);
+    this.data.totalOptions = {};
+    for (let i = 1; i < numTiles; i++) {
+      this.data.totalOptions[i] = new Set([0, 1, 2, 3]);
+    }
     this.data.tileChoice = 0;
+    this.data.tileRotationChoice = 0;
     this.data.collapsed = false;
   }
 
@@ -121,70 +131,106 @@ class GridData {
   }
 
   getEntropy() {
-    return this.data.totalOptions.size;
+    return Object.keys(this.data.totalOptions).length;
   }
 
   getChoice() {
-    return this.data.tileChoice;
+    return [this.data.tileChoice, this.data.tileRotationChoice];
   }
 
   isOption(index) {
     return this.data.totalOptions.has(index);
   }
 
+  removeOption(option, rotateAmount) {
+    this.data.totalOptions[option].delete(rotateAmount);
+    if (this.data.totalOptions[option].size === 0) {
+      delete this.data.totalOptions[option];
+    }
+  }
+
   collapse() {
     if (this.getEntropy() === 0) {
       return false;
     }
-    let optionsArray = Array.from(this.data.totalOptions);
-    this.setChoice(
-      optionsArray[Math.floor(Math.random() * optionsArray.length)]
-    );
+    const optionsArray = Object.keys(this.data.totalOptions);
+    let option = optionsArray[Math.floor(Math.random() * optionsArray.length)];
+    let rotatedOptionsArray = Array.from(this.data.totalOptions[option]);
+    let rotationAmount =
+      rotatedOptionsArray[
+        Math.floor(Math.random() * rotatedOptionsArray.length)
+      ];
+
+    this.setChoice(option, rotationAmount);
     return true;
+  }
+
+  setChoice(tileIndex, rotateAmount) {
+    this.data.tileChoice = tileIndex;
+    this.data.tileRotationChoice = rotateAmount;
+    this.data.totalOptions = {};
+    this.data.totalOptions[tileIndex] = new Set([rotateAmount]);
+    this.data.collapsed = true;
   }
 
   isCollapsed() {
     return this.data.collapsed;
   }
 
-  setChoice(tileIndex) {
-    this.data.tileChoice = tileIndex;
-    this.data.totalOptions.clear();
-    this.data.totalOptions.add(tileIndex);
-    this.data.collapsed = true;
-  }
-
   updateOptions(neighborsObject, tiles) {
     let changedFlag = false;
-    for (const option of this.data.totalOptions) {
-      const edges = tiles[option].getEdges();
-      let dirsMatch = true;
-      for (const [direction, neighborGridData] of Object.entries(
-        neighborsObject
-      )) {
-        const currEdge = edges[direction];
-        const neighborOppDirection = NEIGHBOR_KEY_MAP[direction];
-        let currDirMatch = false;
-        for (const neighborOption of neighborGridData.getOptions()) {
-          const neighborEdge =
-            tiles[neighborOption].getEdge(neighborOppDirection);
-          if (compareEdge(currEdge, neighborEdge)) {
-            currDirMatch = true;
-          }
-        }
-        if (currDirMatch == false) {
-          dirsMatch = false;
-        }
-      }
+    for (const [optionIndex, option] of Object.entries(
+      this.data.totalOptions
+    )) {
+      for (const rotateAmount of option) {
+        const edges = tiles[optionIndex].getEdgesRotated(rotateAmount);
+        const dirsMatch = checkNeighbors(neighborsObject, edges, tiles);
 
-      if (dirsMatch == false) {
-        this.data.totalOptions.delete(option);
-        changedFlag = true;
+        if (dirsMatch == false) {
+          this.removeOption(optionIndex, rotateAmount);
+          changedFlag = true;
+        }
       }
     }
     return changedFlag;
   }
 }
+
+const compareEdge = (edge1, edge2) => {
+  const edge2Reversed = [...edge2].reverse();
+  for (let i = 0; i < edge1.length; i++) {
+    if (edge1[i] != edge2Reversed[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const checkNeighbors = (neighborsObject, edges, tiles) => {
+  let dirsMatch = true;
+  for (const [direction, neighborGridData] of Object.entries(neighborsObject)) {
+    const currEdge = edges[direction];
+    const neighborOppDirection = NEIGHBOR_KEY_MAP[direction];
+    let currDirMatch = false;
+    for (const [neighborOptionIndex, neighborOption] of Object.entries(
+      neighborGridData.getOptions()
+    )) {
+      for (const neighborRotateAmount of neighborOption) {
+        const neighborEdges =
+          tiles[neighborOptionIndex].getEdgesRotated(neighborRotateAmount);
+        const neighborEdge = neighborEdges[neighborOppDirection];
+        const edgesMatch = compareEdge(currEdge, neighborEdge);
+        if (edgesMatch) {
+          currDirMatch = true;
+        }
+      }
+    }
+    if (currDirMatch == false) {
+      dirsMatch = false;
+    }
+  }
+  return dirsMatch;
+};
 
 export default COLOR_MAP;
 export { TILE_SIZE, TileData, GRID_WIDTH, GRID_HEIGHT, GridData };
