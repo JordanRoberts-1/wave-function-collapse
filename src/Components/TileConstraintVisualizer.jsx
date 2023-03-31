@@ -24,12 +24,21 @@ const TileConstraintVisualizer = () => {
     setTiles(newArr);
   };
 
+  const addTile = () => {
+    setTiles((oldTiles) => {
+      const newTiles = [...oldTiles];
+      newTiles.push(new TileData(oldTiles.length));
+      return newTiles;
+    });
+  };
+
   return (
     <div>
       <TileEditor
         onColorUpdate={updateColorData}
         onConstraintUpdate={updateConstraintData}
         tiles={tiles}
+        onAddTile={addTile}
       />
       <Visualizer tiles={tiles} />
     </div>

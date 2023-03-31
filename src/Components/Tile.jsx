@@ -11,7 +11,7 @@ const Tile = ({ tiles, gridData, handleManualSelection }) => {
     <>
       {gridData.isCollapsed() ? (
         <div
-          className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full border relative ${
+          className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full ${
             rotateMap[gridData.getChoice()[1]]
           }`}
         >
