@@ -8,7 +8,7 @@ function TrashIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-4 h-4 hover:stroke-red-700"
+      className="hover:stroke-red-700"
     >
       <path
         strokeLinecap="round"

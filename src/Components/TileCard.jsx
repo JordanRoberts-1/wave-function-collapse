@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals.js";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import TrashIcon from "./TrashIcon.jsx";
 
 const TileCard = ({
@@ -59,7 +60,7 @@ const TileCard = ({
         </div>
         <div className="w-fit h-fit bg-darkest/90 rounded-2xl justify-center p-1 invisible group-hover:flex group-hover:visible">
           <button
-            className="cursor-pointer"
+            className="cursor-pointer w-4 h-4"
             onClick={() => onRemoveTile(globalIndex)}
           >
             <TrashIcon />
@@ -94,7 +95,7 @@ const TileCard = ({
               </div>
             </div>
             {/*Right side tool menu*/}
-            <div className="flex flex-col gap-8 m-4 my-8">
+            <div className="flex flex-col items-center gap-8 m-4 my-8">
               <h1 className="text-5xl w-full text-center font-sans text-coloredtext border-b-2 pb-4 border-b-coloredtext/25">
                 Tile {`#${globalIndex}`}
               </h1>
@@ -112,7 +113,20 @@ const TileCard = ({
                   );
                 })}
               </div>
+              <button
+                className="cursor-pointer w-8 h-8"
+                onClick={() => {
+                  onRemoveTile(globalIndex);
+                  handleCardOpen();
+                }}
+              >
+                <TrashIcon />
+              </button>
             </div>
+            <XMarkIcon
+              className="absolute z-40 stroke-coloredtext w-12 top-4 right-4 cursor-pointer transform transition duration-300 hover:rotate-180"
+              onClick={handleCardOpen}
+            />
           </div>
         </div>
       ) : null}
