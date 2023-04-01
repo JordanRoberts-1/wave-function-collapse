@@ -36,7 +36,7 @@ const TileCard = ({
 
   return (
     <li>
-      <div className="transform transition duration-300 hover:scale-150 flex flex-col items-center gap-2 group">
+      <div className="transform transition duration-300 hover:scale-150 flex flex-col items-center gap-1 group">
         <div
           className="rounded-2xl bg-darkest/90 w-40 h-52 p-4 pt-2 flex flex-col items-center backdrop-blur-lg hover:bg-darkest/100 hover:rounded-xl cursor-pointer"
           onClick={handleCardOpen}
@@ -52,7 +52,7 @@ const TileCard = ({
               );
             })}
           </div>
-          <div className="h-2 w-full border-t-2 border-selection/25" />
+          <div className="h-2 w-full border-t-2 border-selection/25 mb-2" />
           <h1 className="text-2xl font-retro text-selection">
             Tile {`#${globalIndex}`}
           </h1>

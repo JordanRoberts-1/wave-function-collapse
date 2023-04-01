@@ -190,7 +190,7 @@ const Visualizer = ({ tiles }) => {
           })}
         </div>
       </div>
-      <div className="bg-darkest rounded-2xl border border-coloredtext/25 flex flex-col">
+      <div className="bg-darkest rounded-2xl border max-h-[40vw] w-56 border-coloredtext/25 flex flex-col">
         <button
           className="bg-darkest p-4 rounded-t-2xl border-coloredtext/25 hover:bg-light font-sans"
           onClick={handleStartVisualization}
@@ -213,22 +213,24 @@ const Visualizer = ({ tiles }) => {
         <h1 className="font-sans text-2xl text-white text-center mb-4">
           Manual Mode
         </h1>
-        {tiles?.map((tileData, index) => {
-          if (index == 0) {
-            return;
-          }
-          return (
-            <button
-              key={index}
-              className={`bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans ${
-                tileSelection == index ? "bg-light" : ""
-              } ${index == tiles.length - 1 ? "rounded-b-2xl" : ""}`}
-              onClick={() => handleTileSelection(index)}
-            >
-              Tile {`#${index}`}
-            </button>
-          );
-        })}
+        <div className="w-full h-full overflow-y-scroll">
+          {tiles?.map((tileData, index) => {
+            if (index == 0) {
+              return;
+            }
+            return (
+              <button
+                key={index}
+                className={`w-full bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans ${
+                  tileSelection == index ? "bg-light" : ""
+                } ${index == tiles.length - 1 ? "rounded-b-2xl" : ""}`}
+                onClick={() => handleTileSelection(index)}
+              >
+                Tile {`#${index}`}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
