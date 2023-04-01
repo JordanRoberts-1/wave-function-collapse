@@ -32,6 +32,14 @@ const TileConstraintVisualizer = () => {
     });
   };
 
+  const removeTile = (index) => {
+    setTiles((oldTiles) => {
+      const newTiles = [...oldTiles];
+      newTiles.splice(index, 1);
+      return newTiles;
+    });
+  };
+
   return (
     <div>
       <TileEditor
@@ -39,6 +47,7 @@ const TileConstraintVisualizer = () => {
         onConstraintUpdate={updateConstraintData}
         tiles={tiles}
         onAddTile={addTile}
+        onRemoveTile={removeTile}
       />
       <Visualizer tiles={tiles} />
     </div>

@@ -16,23 +16,49 @@ const Visualizer = ({ tiles }) => {
 
   const [intervalId, setIntervalId] = useState(0);
   const [tileSelection, setTileSelection] = useState(1);
+
   const openSet = useRef();
+  const shouldStartLoop = useRef();
 
   useEffect(() => {
     openSet.current = new Set(gridData);
   }, []);
 
+  useEffect(() => {
+    if (shouldStartLoop.current === true) {
+      //Run the algorithm
+      setIntervalId(setInterval(() => updateLoop(), 200));
+      shouldStartLoop.current = false;
+    }
+  }, [gridData]);
+
+  const initializeGridData = () => {
+    setGridData(() => {
+      let array = [];
+      for (let y = 0; y < GRID_HEIGHT; y++) {
+        for (let x = 0; x < GRID_WIDTH; x++) {
+          const index = y * GRID_WIDTH + x;
+          array[index] = new GridData(index, tiles.length);
+        }
+      }
+      openSet.current = new Set(array);
+      return array;
+    });
+  };
+
   const handleStartVisualization = () => {
     if (intervalId !== 0) {
+      setIntervalId(setInterval(() => updateLoop(), 200));
       return;
     }
-    //Run the algorithm
-    setIntervalId(setInterval(() => updateLoop(), 200));
+
+    shouldStartLoop.current = true;
+    initializeGridData(true);
   };
 
   const handleStopVisualization = () => {
     clearInterval(intervalId);
-    setIntervalId(0);
+    shouldStartLoop.current = false;
   };
 
   const handleTileSelection = (index) => {
@@ -52,17 +78,8 @@ const Visualizer = ({ tiles }) => {
   const handleReset = () => {
     clearInterval(intervalId);
     setIntervalId(0);
-    setGridData(() => {
-      let array = [];
-      for (let y = 0; y < GRID_HEIGHT; y++) {
-        for (let x = 0; x < GRID_WIDTH; x++) {
-          const index = y * GRID_WIDTH + x;
-          array[index] = new GridData(index, tiles.length);
-        }
-      }
-      openSet.current = new Set(array);
-      return array;
-    });
+    shouldStartLoop.current = false;
+    initializeGridData(false);
   };
 
   const indexFromPos = (x, y) => {

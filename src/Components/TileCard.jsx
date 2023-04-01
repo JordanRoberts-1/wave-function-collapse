@@ -1,16 +1,18 @@
 import { React, useState, useEffect } from "react";
 import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals.js";
+import TrashIcon from "./TrashIcon.jsx";
 
 const TileCard = ({
   onUpdateColors,
   onUpdateConstraints,
   globalIndex,
   tileData,
+  onRemoveTile,
 }) => {
   const [cardExpanded, setCardExpanded] = useState(false);
   const [currentColor, setCurrentColor] = useState("white");
-
-  useEffect(() => {});
+  const [gridRows, setGridRows] = useState(`grid-rows-${TILE_SIZE}`);
+  const [gridCols, setGridCols] = useState(`grid-cols-${TILE_SIZE}`);
 
   const handleColorChange = (colorKey) => {
     setCurrentColor(colorKey);
@@ -18,11 +20,6 @@ const TileCard = ({
 
   const handleCardOpen = () => {
     setCardExpanded(!cardExpanded);
-  };
-
-  const handleConstraintChange = (constraintKey, newValue) => {
-    if (newValue < 1) newValue = 1;
-    onUpdateConstraints(globalIndex, constraintKey, newValue);
   };
 
   const handleClick = (index, color) => {
@@ -39,11 +36,35 @@ const TileCard = ({
 
   return (
     <li>
-      <div
-        className="rounded-2xl bg-darkest/90 max-w-sm h-full p-8 flex flex-col items-center transform transition duration-300 hover:scale-110 backdrop-blur-lg hover:bg-darkest/100 hover:rounded-xl cursor-pointer"
-        onClick={handleCardOpen}
-      >
-        <h1>Tile {`#${globalIndex}`}</h1>
+      <div className="transform transition duration-300 hover:scale-150 flex flex-col items-center gap-2 group">
+        <div
+          className="rounded-2xl bg-darkest/90 w-40 h-52 p-4 pt-2 flex flex-col items-center backdrop-blur-lg hover:bg-darkest/100 hover:rounded-xl cursor-pointer"
+          onClick={handleCardOpen}
+        >
+          <div className={`grid ${gridRows} ${gridCols} w-32 h-32 mb-4`}>
+            {tileData?.getColors()?.map((color, index) => {
+              return (
+                <div
+                  key={index}
+                  style={{ background: `${COLOR_MAP[color]}` }}
+                  className="w-full h-full"
+                ></div>
+              );
+            })}
+          </div>
+          <div className="h-2 w-full border-t-2 border-selection/25" />
+          <h1 className="text-2xl font-retro text-selection">
+            Tile {`#${globalIndex}`}
+          </h1>
+        </div>
+        <div className="w-fit h-fit bg-darkest/90 rounded-2xl justify-center p-2 invisible group-hover:flex group-hover:visible">
+          <button
+            className="cursor-pointer"
+            onClick={() => onRemoveTile(globalIndex)}
+          >
+            <TrashIcon />
+          </button>
+        </div>
       </div>
       {/* Expanded Card*/}
       {cardExpanded ? (
