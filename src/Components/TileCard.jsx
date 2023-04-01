@@ -57,7 +57,7 @@ const TileCard = ({
             Tile {`#${globalIndex}`}
           </h1>
         </div>
-        <div className="w-fit h-fit bg-darkest/90 rounded-2xl justify-center p-2 invisible group-hover:flex group-hover:visible">
+        <div className="w-fit h-fit bg-darkest/90 rounded-2xl justify-center p-1 invisible group-hover:flex group-hover:visible">
           <button
             className="cursor-pointer"
             onClick={() => onRemoveTile(globalIndex)}
@@ -73,20 +73,20 @@ const TileCard = ({
           onClick={handleCardOpen}
         >
           <div
-            className="animate-growFromNothing grid grid-rows-1 grid-cols-[70%_30%] fixed z-30 w-[80%] h-[90%] bg-gradient-to-bl from-darkest to-dark rounded-2xl"
+            className="animate-growFromNothing grid grid-rows-1 grid-cols-[70%_30%] fixed z-30 w-[60%] h-[90%] bg-gradient-to-bl from-darkest to-dark rounded-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/*tile color grid*/}
-            <div className="flex flex-row items-center justify-center p-10 m-4 my-8 border-r-2 border-r-coloredtext/25">
+            <div className="flex flex-row items-center justify-center p-10">
               <div className="flex flex-col items-center justify-center w-[100%] h-[100%]">
-                <div className="grid grid-rows-3 grid-cols-3 place-items-center gap-2 w-[90%] max-w-[90%]">
+                <div className="grid grid-rows-3 grid-cols-3 place-items-center gap-1 w-[100%]">
                   {tileData?.getColors()?.map((color, index) => {
                     return (
                       <button
                         key={index}
                         onClick={() => handleClick(index, currentColor)}
                         style={{ background: `${COLOR_MAP[color]}` }}
-                        className="w-full h-0 shadow-lg pb-full rounded-lg"
+                        className="w-full h-0 pb-full rounded-lg"
                       ></button>
                     );
                   })}
@@ -94,23 +94,24 @@ const TileCard = ({
               </div>
             </div>
             {/*Right side tool menu*/}
-            <div className="flex flex-col gap-4 m-4 my-8">
+            <div className="flex flex-col gap-8 m-4 my-8">
               <h1 className="text-5xl w-full text-center font-sans text-coloredtext border-b-2 pb-4 border-b-coloredtext/25">
                 Tile {`#${globalIndex}`}
               </h1>
-              {Object.keys(COLOR_MAP).map((color, index) => {
-                return (
-                  <button
-                    key={index}
-                    style={{ color: `${color}` }}
-                    onClick={() => {
-                      handleColorChange(color);
-                    }}
-                  >
-                    {color}
-                  </button>
-                );
-              })}
+              <div className="grid grid-cols-4 grid-rows-4 gap-4">
+                {Object.keys(COLOR_MAP).map((color, index) => {
+                  return (
+                    <button
+                      key={index}
+                      style={{ background: `${color}` }}
+                      onClick={() => {
+                        handleColorChange(color);
+                      }}
+                      className="w-8 h-8"
+                    ></button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

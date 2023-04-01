@@ -48,6 +48,7 @@ const Visualizer = ({ tiles }) => {
 
   const handleStartVisualization = () => {
     if (intervalId !== 0) {
+      clearInterval(intervalId);
       setIntervalId(setInterval(() => updateLoop(), 200));
       return;
     }
@@ -175,8 +176,11 @@ const Visualizer = ({ tiles }) => {
   };
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-b from-darkest to-light flex flex-row gap-8 items-center justify-center">
-      <div className="rounded-2xl w-[40vw] h-[40vw] border border-coloredtext/25 bg-darkest p-8">
+    <div
+      className="w-screen h-screen bg-gradient-to-b from-darkest to-light flex flex-row gap-8 items-center justify-center"
+      id="Visualize"
+    >
+      <div className="mt-12 rounded-2xl w-[40vw] h-[40vw] border border-coloredtext/25 bg-darkest p-8">
         <div className="w-full h-full grid grid-cols-16 grid-rows-16">
           {gridData?.map((gridData, index) => {
             return (
@@ -190,7 +194,7 @@ const Visualizer = ({ tiles }) => {
           })}
         </div>
       </div>
-      <div className="bg-darkest rounded-2xl border max-h-[40vw] w-56 border-coloredtext/25 flex flex-col">
+      <div className="mt-12 bg-darkest rounded-2xl border max-h-[40vw] w-56 border-coloredtext/25 flex flex-col">
         <button
           className="bg-darkest p-4 rounded-t-2xl border-coloredtext/25 hover:bg-light font-sans"
           onClick={handleStartVisualization}
@@ -213,7 +217,7 @@ const Visualizer = ({ tiles }) => {
         <h1 className="font-sans text-2xl text-white text-center mb-4">
           Manual Mode
         </h1>
-        <div className="w-full h-full overflow-y-scroll">
+        <div className="w-full h-full overflow-y-scroll rounded-b-2xl">
           {tiles?.map((tileData, index) => {
             if (index == 0) {
               return;
@@ -223,7 +227,7 @@ const Visualizer = ({ tiles }) => {
                 key={index}
                 className={`w-full bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans ${
                   tileSelection == index ? "bg-light" : ""
-                } ${index == tiles.length - 1 ? "rounded-b-2xl" : ""}`}
+                }`}
                 onClick={() => handleTileSelection(index)}
               >
                 Tile {`#${index}`}

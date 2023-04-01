@@ -5,11 +5,11 @@ import TileConstraintVisualizer from "./Components/TileConstraintVisualizer";
 
 function App() {
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Navbar />
       <Home />
       <TileConstraintVisualizer />
-    </>
+    </div>
   );
 }
 

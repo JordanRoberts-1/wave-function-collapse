@@ -20,6 +20,10 @@ module.exports = {
           "0%": { transform: "translateY(50%)", opacity: 0 },
           "100%": { transform: "translateY(0%)", opacity: 100 },
         },
+        fadeindown: {
+          "0%": { transform: "translateY(-50%)", opacity: 0 },
+          "100%": { transform: "translateY(0%)", opacity: 100 },
+        },
         jiggle: {
           "0%": { transform: "translateY(0%)" },
           "20%": { transform: "translateY(4%)" },

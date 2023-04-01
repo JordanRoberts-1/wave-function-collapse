@@ -1,8 +1,18 @@
 const COLOR_MAP = {
   white: "#FFFFFF",
+  salmon: "#ff9393",
   red: "#FF0000",
-  green: "#00FF00",
-  blue: "#0000FF",
+  darkred: "#730000",
+  pink: "#ff00bb",
+  purple: "#a900ff",
+  darkblue: "#0b0082",
+  blue: "#1600ff",
+  teal: "#00f5ff",
+  lightgreen: "#00FF00",
+  green: "#00771c",
+  yellow: "#faff09",
+  orange: "#ff9300",
+  black: "#000000",
 };
 
 const TILE_SIZE = 3;

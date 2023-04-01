@@ -12,8 +12,11 @@ const TileEditor = ({
   const gridMax = 6 * 3;
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-b from-black to-darkest flex flex-col items-center p-16">
-      <ol className="w-fit grid grid-cols-6 grid-rows-3 gap-8 gap-y-12 place-items-center">
+    <div
+      className="w-screen h-screen bg-gradient-to-b from-black to-darkest flex flex-col items-center p-16"
+      id="TileEditor"
+    >
+      <ol className="mt-12 w-fit grid grid-cols-6 grid-rows-3 gap-8 gap-y-12 place-items-center">
         {tiles?.map((tileData, index) => {
           if (index == 0) {
             return;
