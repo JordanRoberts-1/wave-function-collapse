@@ -1,7 +1,6 @@
-import { React, useEffect, useState } from "react";
-import { ArcherContainer, ArcherElement } from "react-archer";
+import { React } from "react";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
-import HomeCard from "./HomeCard";
+import HomeCardsContainer from "./HomeCardsContainer";
 
 const Home = () => {
   const aboutTexts = [
@@ -9,14 +8,6 @@ const Home = () => {
     "Constraints affect the rules for how tiles connect. For this visualizer, matching edges get connected.",
     "Watch the algorithm play out. Either let the algorithm decide everything or manually place tiles.",
   ];
-
-  const [arrowPx, setArrowPx] = useState("0");
-
-  useEffect(() => {
-    setTimeout(() => {
-      setArrowPx("2");
-    }, 4250);
-  }, []);
 
   return (
     <div
@@ -32,61 +23,7 @@ const Home = () => {
           generating organic designs based on simple constraints, continue
           further to find out more!
         </p>
-        <ArcherContainer strokeColor="#ffffff" strokeWidth={arrowPx}>
-          <div className="grid grid-rows-1 grid-cols-3 gap-20">
-            <div className="animate-[fadeinup_500ms_2s_ease-in-out_forwards] opacity-0">
-              <ArcherElement
-                id="element1"
-                relations={[
-                  {
-                    targetId: "element2",
-                    targetAnchor: "left",
-                    sourceAnchor: "right",
-                  },
-                ]}
-              >
-                <div className="w-72 h-[22rem]">
-                  <HomeCard
-                    title="Tile Editor"
-                    aboutText={aboutTexts[0]}
-                    scrollId="#TileEditor"
-                  />
-                </div>
-              </ArcherElement>
-            </div>
-            <div className="animate-[fadeinup_500ms_2.75s_ease-in-out_forwards] opacity-0">
-              <ArcherElement
-                id="element2"
-                relations={[
-                  {
-                    targetId: "element3",
-                    targetAnchor: "left",
-                    sourceAnchor: "right",
-                  },
-                ]}
-              >
-                <div className="w-72 h-[22rem]">
-                  <HomeCard
-                    title="Constraints"
-                    aboutText={aboutTexts[1]}
-                    scrollId="#TileEditor"
-                  />
-                </div>
-              </ArcherElement>
-            </div>
-            <div className="animate-[fadeinup_500ms_3.5s_ease-in-out_forwards] opacity-0">
-              <ArcherElement id="element3">
-                <div className="w-72 h-[22rem]">
-                  <HomeCard
-                    title="Visualize"
-                    aboutText={aboutTexts[2]}
-                    scrollId="#Visualize"
-                  />
-                </div>
-              </ArcherElement>
-            </div>
-          </div>
-        </ArcherContainer>
+        <HomeCardsContainer aboutTexts={aboutTexts} />
       </div>
 
       <div className=" absolute bottom-2 flex flex-col items-center animate-bounce">

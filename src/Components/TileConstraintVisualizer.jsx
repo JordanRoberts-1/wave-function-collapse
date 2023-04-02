@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import COLOR_MAP, { TILE_SIZE, TileData } from "../Globals.js";
+import { TileData } from "../Globals.js";
 import TileEditor from "./TileEditor.jsx";
 import Visualizer from "./Visualizer.jsx";
 
@@ -12,19 +12,13 @@ const TileConstraintVisualizer = () => {
     return array;
   });
 
-  const updateConstraintData = (index, constraintKey, newValue) => {
-    let newArr = [...tiles];
-    newArr[index].updateConstraint(constraintKey, newValue);
-    setTiles(newArr);
-  };
-
-  const updateColorData = (index, newData) => {
+  const handleUpdateColorData = (index, newData) => {
     let newArr = [...tiles];
     newArr[index].updateColors(newData);
     setTiles(newArr);
   };
 
-  const addTile = () => {
+  const handleAddTile = () => {
     setTiles((oldTiles) => {
       const newTiles = [...oldTiles];
       newTiles.push(new TileData(oldTiles.length));
@@ -32,7 +26,7 @@ const TileConstraintVisualizer = () => {
     });
   };
 
-  const removeTile = (index) => {
+  const handleRemoveTile = (index) => {
     setTiles((oldTiles) => {
       const newTiles = [...oldTiles];
       newTiles.splice(index, 1);
@@ -43,11 +37,10 @@ const TileConstraintVisualizer = () => {
   return (
     <div>
       <TileEditor
-        onColorUpdate={updateColorData}
-        onConstraintUpdate={updateConstraintData}
+        onColorUpdate={handleUpdateColorData}
         tiles={tiles}
-        onAddTile={addTile}
-        onRemoveTile={removeTile}
+        onAddTile={handleAddTile}
+        onRemoveTile={handleRemoveTile}
       />
       <Visualizer tiles={tiles} />
     </div>

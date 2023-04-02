@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { GRID_WIDTH, GRID_HEIGHT, GridData } from "../Globals";
 import Tile from "./Tile";
-import TileSelectionButton from "./TileSelectionButton";
+import VisualizerToolbar from "./VisualizerToolbar";
 
 const Visualizer = ({ tiles }) => {
   const [gridData, setGridData] = useState(() => {
@@ -120,7 +120,6 @@ const Visualizer = ({ tiles }) => {
   };
 
   const updateNeighbors = (startingGridTile) => {
-    const index = startingGridTile.getIndex();
     const [x, y] = startingGridTile.getPos();
 
     setGridData((oldData) => {
@@ -206,46 +205,14 @@ const Visualizer = ({ tiles }) => {
           })}
         </div>
       </div>
-      <div className="mt-12 bg-darkest rounded-2xl border max-h-[40vw] w-56 border-coloredtext/25 flex flex-col">
-        <button
-          className="bg-darkest p-4 rounded-t-2xl border-coloredtext/25 hover:bg-light font-sans"
-          onClick={handleStartVisualization}
-        >
-          Start Visualization
-        </button>
-        <button
-          className="bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans"
-          onClick={handleStopVisualization}
-        >
-          Pause Visualization
-        </button>
-        <button
-          className="bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans"
-          onClick={handleReset}
-        >
-          Reset
-        </button>
-        <span className="w-full h-0 border-b-4 border-coloredtext/25 mb-4"></span>
-        <h1 className="font-sans text-2xl text-white text-center mb-4">
-          Manual Mode
-        </h1>
-        <div className="w-full h-full overflow-y-scroll rounded-b-2xl">
-          {tiles?.map((tileData, index) => {
-            if (index == 0) {
-              return;
-            }
-            return (
-              <TileSelectionButton
-                key={index}
-                index={index}
-                tileSelection={tileSelection}
-                tileData={tileData}
-                onSelect={handleTileSelection}
-              />
-            );
-          })}
-        </div>
-      </div>
+      <VisualizerToolbar
+        onStartVisualization={handleStartVisualization}
+        onStopVisualization={handleStopVisualization}
+        onReset={handleReset}
+        onTileSelection={handleTileSelection}
+        tileSelection={tileSelection}
+        tiles={tiles}
+      />
     </div>
   );
 };

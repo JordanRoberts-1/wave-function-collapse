@@ -1,11 +1,8 @@
-import { React, useState } from "react";
-import COLOR_MAP, { TILE_SIZE } from "../Globals";
+import { React, useState, useEffect } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
-import { useEffect } from "react";
+import TileRender from "./TileRender";
 
 const TileSelectionButton = ({ index, tileSelection, tileData, onSelect }) => {
-  const [gridRows, setGridRows] = useState(`grid-rows-${TILE_SIZE}`);
-  const [gridCols, setGridCols] = useState(`grid-cols-${TILE_SIZE}`);
   const [rotateAmount, setRotateAmount] = useState(0);
 
   useEffect(() => {
@@ -29,19 +26,7 @@ const TileSelectionButton = ({ index, tileSelection, tileData, onSelect }) => {
       >
         <h1 className="w-16">Tile {`#${index}`}</h1>
         <div className={`w-10 h-10 ${rotateMap[rotateAmount]}`}>
-          <div
-            className={`grid ${gridRows} ${gridCols} place-items-center w-10 h-10`}
-          >
-            {tileData?.getColors()?.map((color, i) => {
-              return (
-                <div
-                  key={i}
-                  style={{ background: `${COLOR_MAP[color]}` }}
-                  className="w-full h-full"
-                ></div>
-              );
-            })}
-          </div>
+          <TileRender tileData={tileData} />
         </div>
       </button>
       <button

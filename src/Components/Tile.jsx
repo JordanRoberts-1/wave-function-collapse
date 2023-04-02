@@ -1,30 +1,15 @@
 import { React, useState } from "react";
-import COLOR_MAP, { TILE_SIZE } from "../Globals";
+import TileRender from "./TileRender";
 
 const Tile = ({ tiles, gridData, handleManualSelection }) => {
-  const [gridRows, setGridRows] = useState(`grid-rows-${TILE_SIZE}`);
-  const [gridCols, setGridCols] = useState(`grid-cols-${TILE_SIZE}`);
-
   const rotateMap = ["rotate-0", "rotate-90", "rotate-180", "-rotate-90"];
 
   return (
     <>
       {gridData.isCollapsed() ? (
         <div className={`w-full h-full ${rotateMap[gridData.getChoice()[1]]}`}>
-          <div
-            className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full animate-jigglewiggleshrink`}
-          >
-            {tiles[gridData.getChoice()[0]]
-              ?.getColors()
-              ?.map((color, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{ background: `${COLOR_MAP[color]}` }}
-                    className="w-full h-full"
-                  ></div>
-                );
-              })}
+          <div className={`w-full h-full animate-jigglewiggleshrink`}>
+            <TileRender tileData={tiles[gridData.getChoice()[0]]} />
           </div>
         </div>
       ) : (
