@@ -39,7 +39,7 @@ const TileCard = ({
     <li>
       <div className="transform transition duration-300 hover:scale-150 flex flex-col items-center gap-1 group">
         <div
-          className="rounded-2xl bg-darkest/90 w-40 h-52 p-4 pt-2 flex flex-col items-center backdrop-blur-lg hover:bg-darkest/100 hover:rounded-xl cursor-pointer"
+          className="animate-jigglewiggle rounded-2xl bg-darkest/90 w-40 h-52 p-4 pt-2 flex flex-col items-center backdrop-blur-lg hover:bg-darkest/100 hover:rounded-xl cursor-pointer"
           onClick={handleCardOpen}
         >
           <div className={`grid ${gridRows} ${gridCols} w-32 h-32 mb-4`}>
