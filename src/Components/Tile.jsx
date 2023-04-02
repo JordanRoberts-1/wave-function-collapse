@@ -10,20 +10,22 @@ const Tile = ({ tiles, gridData, handleManualSelection }) => {
   return (
     <>
       {gridData.isCollapsed() ? (
-        <div
-          className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full ${
-            rotateMap[gridData.getChoice()[1]]
-          }`}
-        >
-          {tiles[gridData.getChoice()[0]]?.getColors()?.map((color, index) => {
-            return (
-              <div
-                key={index}
-                style={{ background: `${COLOR_MAP[color]}` }}
-                className="w-full h-full"
-              ></div>
-            );
-          })}
+        <div className={`w-full h-full ${rotateMap[gridData.getChoice()[1]]}`}>
+          <div
+            className={`grid ${gridRows} ${gridCols} place-items-center w-full h-full animate-jigglewiggleshrink`}
+          >
+            {tiles[gridData.getChoice()[0]]
+              ?.getColors()
+              ?.map((color, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{ background: `${COLOR_MAP[color]}` }}
+                    className="w-full h-full"
+                  ></div>
+                );
+              })}
+          </div>
         </div>
       ) : (
         <div

@@ -66,6 +66,30 @@ module.exports = {
             opacity: 100,
           },
         },
+        jigglewiggleshrink: {
+          "0%": {
+            transform: "translateY(0%)",
+            transform: "rotate(0deg)",
+            transform: "scale(3)",
+            opacity: 25,
+          },
+          "20%": { transform: "translateY(3%)", transform: "rotate(1deg)" },
+          "25%": { transform: "translateY(4%)", transform: "rotate(2deg)" },
+          "30%": { transform: "translateY(3%)", transform: "rotate(1deg)" },
+          "50%": {
+            transform: "translateY(0%)",
+            transform: "rotate(0deg)",
+          },
+          "60%": { transform: "translateY(-3%)", transform: "rotate(-1deg)" },
+          "65%": { transform: "translateY(-4%)", transform: "rotate(-2deg)" },
+          "70%": { transform: "translateY(0%)", transform: "rotate(0deg)" },
+          "100%": {
+            transform: "translateY(0%)",
+            transform: "rotate(0deg)",
+            transform: "scale(1)",
+            opacity: 100,
+          },
+        },
       },
       animation: {
         growFromNothing: "growFromNothing 125ms 0s ease-in-out forwards",
@@ -73,6 +97,7 @@ module.exports = {
         "fade-in-up": "fadeinup 750ms 1s ease-in-out forwards",
         "fade-in-up-fade-out": "fadeinupfadeout 5s 0s ease-in-out forwards",
         jigglewiggle: "jigglewiggle 250ms 0s ease-in-out forwards",
+        jigglewiggleshrink: "jigglewiggleshrink 500ms 0s ease-in forwards",
       },
       padding: {
         "1/2": "50%",
