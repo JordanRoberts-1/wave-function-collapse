@@ -27,7 +27,7 @@ const TileSelectionButton = ({ index, tileSelection, tileData, onSelect }) => {
           tileSelection == index ? "bg-light" : ""
         }`}
       >
-        <h1 className="w-12">Tile {`#${index}`}</h1>
+        <h1 className="w-16">Tile {`#${index}`}</h1>
         <div className={`w-10 h-10 ${rotateMap[rotateAmount]}`}>
           <div
             className={`grid ${gridRows} ${gridCols} place-items-center w-10 h-10`}

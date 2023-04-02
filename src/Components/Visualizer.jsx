@@ -217,7 +217,7 @@ const Visualizer = ({ tiles }) => {
           className="bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans"
           onClick={handleStopVisualization}
         >
-          End Visualization
+          Pause Visualization
         </button>
         <button
           className="bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans"
