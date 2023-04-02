@@ -29,7 +29,7 @@ const Tile = ({ tiles, gridData, handleManualSelection }) => {
         </div>
       ) : (
         <div
-          className="w-full h-full text-2xl text-black border relative"
+          className="w-full h-full text-2xl text-black border relative cursor-pointer"
           style={{
             background:
               gridData.getEntropy() == 0

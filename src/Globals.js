@@ -148,8 +148,11 @@ class GridData {
     return [this.data.tileChoice, this.data.tileRotationChoice];
   }
 
-  isOption(index) {
-    return this.data.totalOptions.has(index);
+  isOption(index, rotateAmount) {
+    const options = this.getOptions();
+    const result =
+      Object.hasOwn(options, index) && options[index].has(rotateAmount);
+    return result;
   }
 
   removeOption(option, rotateAmount) {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { GRID_WIDTH, GRID_HEIGHT, GridData } from "../Globals";
 import Tile from "./Tile";
+import TileSelectionButton from "./TileSelectionButton";
 
 const Visualizer = ({ tiles }) => {
   const [gridData, setGridData] = useState(() => {
@@ -19,9 +20,13 @@ const Visualizer = ({ tiles }) => {
 
   const openSet = useRef();
   const shouldStartLoop = useRef();
+  const currentSelectedRotation = useRef();
+  const manualStart = useRef();
 
   useEffect(() => {
     openSet.current = new Set(gridData);
+    currentSelectedRotation.current = 0;
+    manualStart.current = false;
   }, []);
 
   useEffect(() => {
@@ -47,9 +52,10 @@ const Visualizer = ({ tiles }) => {
   };
 
   const handleStartVisualization = () => {
-    if (intervalId !== 0) {
+    if (intervalId !== 0 || manualStart.current) {
       clearInterval(intervalId);
       setIntervalId(setInterval(() => updateLoop(), 200));
+      manualStart.current = false;
       return;
     }
 
@@ -62,18 +68,23 @@ const Visualizer = ({ tiles }) => {
     shouldStartLoop.current = false;
   };
 
-  const handleTileSelection = (index) => {
+  const handleTileSelection = (index, rotateAmount) => {
     setTileSelection(index);
+    currentSelectedRotation.current = rotateAmount;
   };
 
   const handleManualSelection = (index) => {
     clearInterval(intervalId);
     const tile = gridData[index];
-    if (tile.isCollapsed() || !tile.isOption(tileSelection)) return;
-    tile.setChoice(tileSelection);
+    if (
+      tile.isCollapsed() ||
+      !tile.isOption(tileSelection, currentSelectedRotation.current)
+    )
+      return;
+    tile.setChoice(tileSelection, currentSelectedRotation.current);
     updateNeighbors(tile);
     openSet.current.delete(tile);
-    setIntervalId(setInterval(() => updateLoop(), 200));
+    manualStart.current = true;
   };
 
   const handleReset = () => {
@@ -81,6 +92,7 @@ const Visualizer = ({ tiles }) => {
     setIntervalId(0);
     shouldStartLoop.current = false;
     initializeGridData(false);
+    manualStart.current = false;
   };
 
   const indexFromPos = (x, y) => {
@@ -141,7 +153,7 @@ const Visualizer = ({ tiles }) => {
   };
 
   const updateLoop = () => {
-    if (openSet.size === 0) {
+    if (openSet.current.size === 0) {
       clearInterval(intervalId);
       setIntervalId(0);
       return;
@@ -223,15 +235,13 @@ const Visualizer = ({ tiles }) => {
               return;
             }
             return (
-              <button
+              <TileSelectionButton
                 key={index}
-                className={`w-full bg-darkest p-4 border-t border-coloredtext/25 hover:bg-light font-sans ${
-                  tileSelection == index ? "bg-light" : ""
-                }`}
-                onClick={() => handleTileSelection(index)}
-              >
-                Tile {`#${index}`}
-              </button>
+                index={index}
+                tileSelection={tileSelection}
+                tileData={tileData}
+                onSelect={handleTileSelection}
+              />
             );
           })}
         </div>
