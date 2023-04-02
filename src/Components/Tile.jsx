@@ -31,9 +31,12 @@ const Tile = ({ tiles, gridData, handleManualSelection }) => {
         <div
           className="w-full h-full text-2xl text-black border relative"
           style={{
-            background: `rgba(${
-              255 - (gridData.getEntropy() / tiles.length) * 255
-            }, 255, 255, 255)`,
+            background:
+              gridData.getEntropy() == 0
+                ? "red"
+                : `rgba(${
+                    255 - (gridData.getEntropy() / tiles.length) * 255
+                  }, 255, 255, 255)`,
           }}
           onClick={() => handleManualSelection(gridData.getIndex())}
         >
