@@ -5,7 +5,7 @@
   "type": "module",
   "main": "./src/main.jsx",
   "scripts": {
-    "start": "vite",
+    "start": "vite preview",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
