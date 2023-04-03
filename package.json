@@ -3,9 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "./src/main.jsx",
   "scripts": {
-    "start": "vite preview",
+    "main": "src/main.jsx", 
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -15,8 +14,7 @@
     "heroicons": "^2.0.17",
     "react": "^18.2.0",
     "react-archer": "^4.2.2",
-    "react-dom": "^18.2.0",
-    "vite": "^4.1.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
