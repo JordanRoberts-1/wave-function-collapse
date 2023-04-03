@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <div
-      className="w-screen h-screen grid place-items-center bg-[url('images/HomepageBackground.jpg')] bg-no-repeat bg-cover bg-center"
+      className="w-screen h-screen grid place-items-center bg-[url('assets/HomepageBackground.jpg')] bg-no-repeat bg-cover bg-center"
       id="Home"
     >
       <div className="max-w-[50%]">
