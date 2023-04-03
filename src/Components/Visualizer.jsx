@@ -153,8 +153,7 @@ const Visualizer = ({ tiles }) => {
 
   const updateLoop = () => {
     if (openSet.current.size === 0) {
-      clearInterval(intervalId);
-      setIntervalId(0);
+      handleStopVisualization();
       return;
     }
 
