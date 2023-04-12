@@ -6,7 +6,7 @@ import Visualizer from "./Visualizer.jsx";
 const TileConstraintVisualizer = () => {
   const [tiles, setTiles] = useState(() => {
     let array = [];
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 13; i++) {
       array[i] = new TileData(i);
     }
     array = createStartingTileSet(array);
@@ -129,61 +129,50 @@ function createStartingTileSet(array) {
     "blue",
   ]);
   array[8].updateColors([
-    "green",
-    "green",
-    "green",
-    "green",
-    "orange",
-    "green",
-    "green",
-    "orange",
-    "orange",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
   ]);
   array[9].updateColors([
+    "orange",
+    "orange",
+    "orange",
+    "orange",
     "blue",
+    "orange",
+    "orange",
     "blue",
-    "blue",
-    "blue",
-    "blue",
-    "blue",
-    "blue",
-    "blue",
-    "blue",
+    "orange",
   ]);
   array[10].updateColors([
     "orange",
-    "orange",
-    "orange",
-    "orange",
     "blue",
     "orange",
     "orange",
     "blue",
     "orange",
+    "blue",
+    "blue",
+    "blue",
   ]);
   array[11].updateColors([
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
+    "blue",
     "orange",
     "blue",
     "orange",
-    "orange",
-    "blue",
-    "orange",
-    "blue",
-    "blue",
-    "blue",
   ]);
   array[12].updateColors([
-    "blue",
-    "blue",
-    "blue",
-    "blue",
-    "blue",
-    "blue",
-    "orange",
-    "blue",
-    "orange",
-  ]);
-  array[13].updateColors([
     "orange",
     "blue",
     "orange",
